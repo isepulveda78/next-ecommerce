@@ -30,7 +30,7 @@ export default function ProductScreen() {
                 <Grid item md={3} xs={12}>
                     <List>
                         <ListItem>
-                            <Typography component="h1">{product.name}</Typography>
+                            <Typography component="h1" variant="h1">{product.name}</Typography>
                         </ListItem>
                         <ListItem>
                             <Typography>Category: {product.category}</Typography>
@@ -42,7 +42,7 @@ export default function ProductScreen() {
                             <Typography>Rating: {product.rating} stars ({product.numReviews} reviews)</Typography>
                         </ListItem>
                         <ListItem>
-                            <Typography>Description: ${product.description}</Typography>
+                            <Typography>Description: {product.description}</Typography>
                         </ListItem>
                     </List>
                 </Grid>
@@ -62,7 +62,7 @@ export default function ProductScreen() {
                                 </Grid>
                             </ListItem>
                             <ListItem>
-                                <Button fullWidth variant="contained" color="primary" className={classes.warning}>
+                                <Button fullWidth variant="contained" color="secondary" className={classes.warning}>
                                     Add to Cart
                                 </Button>
                             </ListItem>
