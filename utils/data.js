@@ -1,10 +1,27 @@
+import bcrypt from 'bcryptjs';
 const data = {
+  users: [
+    {
+      name: 'John',
+      email: 'admin@example.com',
+      password: bcrypt.hashSync('123456'),
+      isAdmin: true,
+    },
+    {
+      name: 'Jane',
+      email: 'user@example.com',
+      password: bcrypt.hashSync('123456'),
+      isAdmin: false,
+    },
+  ],
   products: [
     {
       name: 'Free Shirt',
       slug: 'free-shirt',
       category: 'Shirts',
       image: '/images/shirt1.jpg',
+      isFeatured: true,
+      featuredImage: '/images/banner1.jpg',
       price: 70,
       brand: 'Nike',
       rating: 4.5,
@@ -17,6 +34,8 @@ const data = {
       slug: 'fit-shirt',
       category: 'Shirts',
       image: '/images/shirt2.jpg',
+      isFeatured: true,
+      featuredImage: '/images/banner2.jpg',
       price: 80,
       brand: 'Adidas',
       rating: 4.2,
