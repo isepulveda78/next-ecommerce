@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
 import Head from 'next/head'
 import NextLink from 'next/link'
 import {
@@ -14,13 +14,13 @@ import {
   Badge,
   Button,
   Menu,
-  MenuItem
+  MenuItem,
 } from '@material-ui/core'
 import useStyles from '../utils/styles'
 import { Store } from '../utils/Store'
 import Cookies from 'js-cookie'
+import { useState } from 'react'
 import { useRouter } from 'next/router'
-
 
 export default function Layout({ title, description, children }) {
   const router = useRouter()
@@ -52,15 +52,18 @@ export default function Layout({ title, description, children }) {
   const classes = useStyles()
   const darkModeChangeHandler = () => {
     dispatch({ type: darkMode ? 'DARK_MODE_OFF' : 'DARK_MODE_ON' })
-    const newDarkMode = !darkMode 
-    Cookies.set('darkMode', newDarkMode ? 'ON': 'OFF')
+    const newDarkMode = !darkMode
+    Cookies.set('darkMode', newDarkMode ? 'ON' : 'OFF')
   }
-  const [anchorEl, setAnchorEl] = useState(null);
+  const [anchorEl, setAnchorEl] = useState(null)
   const loginClickHandler = (e) => {
-    setAnchorEl(e.currentTarget);
+    setAnchorEl(e.currentTarget)
   }
-  const loginMenuCloseHandler = () => {
+  const loginMenuCloseHandler = (e, redirect) => {
     setAnchorEl(null)
+    if (redirect) {
+      router.push(redirect)
+    }
   }
   const logoutClickHandler = () => {
     setAnchorEl(null)
@@ -72,7 +75,7 @@ export default function Layout({ title, description, children }) {
   return (
     <div>
       <Head>
-        <title>{title ? `${title} - E-commerce` : 'E-commerce'}</title>
+        <title>{title ? `${title} - Next Amazona` : 'Next Amazona'}</title>
         {description && <meta name="description" content={description}></meta>}
       </Head>
       <ThemeProvider theme={theme}>
@@ -81,7 +84,7 @@ export default function Layout({ title, description, children }) {
           <Toolbar>
             <NextLink href="/" passHref>
               <Link>
-                <Typography className={classes.brand}>ecommerce</Typography>
+                <Typography className={classes.brand}>amazona</Typography>
               </Link>
             </NextLink>
             <div className={classes.grow}></div>
@@ -91,33 +94,55 @@ export default function Layout({ title, description, children }) {
                 onChange={darkModeChangeHandler}
               ></Switch>
               <NextLink href="/cart" passHref>
-                 <Link>
-                {cart.cartItems.length > 0 ? ( <Badge color="secondary" badgeContent={cart.cartItems.length}>Cart</Badge> ) : ( 'Cart' )}
+                <Link>
+                  {cart.cartItems.length > 0 ? (
+                    <Badge
+                      color="secondary"
+                      badgeContent={cart.cartItems.length}
+                    >
+                      Cart
+                    </Badge>
+                  ) : (
+                    'Cart'
+                  )}
                 </Link>
               </NextLink>
-              { userInfo? ( 
+              {userInfo ? (
                 <>
-                  <Button 
-                  aria-controls="simple-menu"
-                  aria-haspopup="true"
-                  onClick={loginClickHandler}
-                  className={classes.navbarButton}>{userInfo.name}</Button> 
-                  <Menu 
+                  <Button
+                    aria-controls="simple-menu"
+                    aria-haspopup="true"
+                    onClick={loginClickHandler}
+                    className={classes.navbarButton}
+                  >
+                    {userInfo.name}
+                  </Button>
+                  <Menu
                     id="simple-menu"
                     anchorEl={anchorEl}
                     keepMounted
                     open={Boolean(anchorEl)}
                     onClose={loginMenuCloseHandler}
                   >
-                    <MenuItem onClick={loginMenuCloseHandler}>Profile</MenuItem>
-                    <MenuItem onClick={loginMenuCloseHandler}>My Account</MenuItem>
+                    <MenuItem
+                      onClick={(e) => loginMenuCloseHandler(e, '/profile')}
+                    >
+                      Profile
+                    </MenuItem>
+                    <MenuItem
+                      onClick={(e) =>
+                        loginMenuCloseHandler(e, '/order-history')
+                      }
+                    >
+                      Order Hisotry
+                    </MenuItem>
                     <MenuItem onClick={logoutClickHandler}>Logout</MenuItem>
                   </Menu>
                 </>
               ) : (
-              <NextLink href="/login" passHref>
-                <Link>Login</Link>
-              </NextLink>
+                <NextLink href="/login" passHref>
+                  <Link>Login</Link>
+                </NextLink>
               )}
             </div>
           </Toolbar>
