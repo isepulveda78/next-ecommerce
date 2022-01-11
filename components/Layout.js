@@ -137,6 +137,10 @@ export default function Layout({ title, description, children }) {
                       Order Hisotry
                     </MenuItem>
                     <MenuItem onClick={logoutClickHandler}>Logout</MenuItem>
+                    {userInfo.isAdmin && (
+                      <MenuItem onClick={(e) =>
+                        loginMenuCloseHandler(e, '/admin/dashboard')}>Admin Dashboard</MenuItem>
+                    )}
                   </Menu>
                 </>
               ) : (
