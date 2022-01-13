@@ -109,7 +109,6 @@ function ProductEdit({ params }) {
         },
       })
       dispatch({ type: 'UPLOAD_SUCCESS' })
-      
       setValue('image', data.secure_url)
       enqueueSnackbar('File uploaded successfully', { variant: 'success' })
     } catch (err) {
@@ -172,6 +171,11 @@ function ProductEdit({ params }) {
               <NextLink href="/admin/products" passHref>
                 <ListItem selected button component="a">
                   <ListItemText primary="Products"></ListItemText>
+                </ListItem>
+              </NextLink>
+              <NextLink href="/admin/users" passHref>
+                <ListItem button component="a">
+                  <ListItemText primary="Users"></ListItemText>
                 </ListItem>
               </NextLink>
             </List>
